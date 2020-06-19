@@ -1,7 +1,6 @@
 package com.basejava.lesson_1;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Array based storage for Resumes
@@ -24,16 +23,8 @@ public class ArrayStorage {
         }
     }
 
-    Resume get(String uuid) {
-        int count = 0;
-        for(int i = 0; i < storage.length; i++) {
-            if (storage[i].uuid == uuid) {
-                count = i;
-                break;
-            }
-            count++;
-        }
-        return storage[count];
+    String get(String uuid) {
+        return uuid;
     }
 
     void delete(String uuid) {
