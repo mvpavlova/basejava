@@ -33,9 +33,14 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        List<String> newStorage = new ArrayList(Arrays.asList(storage));
-        newStorage.remove(uuid);
-        storage = newStorage.toArray(new Resume[newStorage.size()]);
+        int count = 0;
+        for(int i = 0; i < size ;i++) {
+            if(storage[i].uuid == uuid) {
+                count = i;
+                break;
+            }
+        }
+        System.arraycopy(storage, count + 1, storage, count, storage.length -1 - count);
         size--;
     }
 
