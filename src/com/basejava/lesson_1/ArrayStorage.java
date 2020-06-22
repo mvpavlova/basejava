@@ -1,8 +1,6 @@
 package com.basejava.lesson_1;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Array based storage for Resumes
