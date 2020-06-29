@@ -1,53 +1,77 @@
 package com.basejava.lesson_1;
 
-import java.util.Arrays;
+import static java.util.Arrays.copyOf;
+import static java.util.Arrays.fill;
 
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
-    int size = 0;
+    private Resume[] storage = new Resume[10000];
+    private int size = 0;
 
-    void clear() {
-        Arrays.fill(storage, 0, size, null);
+    public void clear() {
+        fill(storage, 0, size, null);
         size = 0;
     }
 
-    void save(Resume r) {
-        if (size < storage.length) {
-            storage[size] = r;
-            size++;
+    private int reviewIndex(String uuid) {
+        for(int i = 0; i < size; i++) {
+            if(storage[i].getUuid() == uuid) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void update(Resume r) {
+        if(reviewIndex(r.getUuid()) >= 0) {
+            System.out.println("Resume already in array");
+        } else {
+            save(r);
         }
     }
 
-    Resume get(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].uuid == uuid) {
-                return storage[i];
+    public void save(Resume r) {
+        if(reviewIndex(r.getUuid()) < 0) {
+            if (size < storage.length) {
+                storage[size] = r;
+                size++;
+            } else {
+                System.out.println("Array is full");
             }
+        } else {
+            System.out.println("Resume already in array");
+        }
+    }
+
+    public Resume get(String uuid) {
+        if(reviewIndex(uuid) < 0) {
+            System.out.println("Resume not in array");
+        } else {
+            return storage[reviewIndex(uuid)];
         }
         return null;
     }
 
-    void delete(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].uuid == uuid) {
-                System.arraycopy(storage, i + 1, storage, i, size - 1 - i);
+    public void delete(String uuid) {
+        int index = reviewIndex(uuid);
+        if (index >= 0) {
+                System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
                 size--;
-                break;
-            }
+        } else {
+            System.out.println("Resume not in array");
         }
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+    public Resume[] getAll() {
+        return copyOf(storage, size);
     }
 
-    int size() {
+    public int size() {
         return size;
     }
 }
