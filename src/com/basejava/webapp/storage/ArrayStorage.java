@@ -8,20 +8,18 @@ import static java.util.Arrays.fill;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private Resume[] storage = new Resume[10_000];
-    private int size = 0;
-
+public class ArrayStorage extends AbstractArrayStorage {
     public void clear() {
         fill(storage, 0, size, null);
         size = 0;
     }
 
     public void update(Resume resume) {
-        if(getIndex(resume.getUuid()) >= 0) {
+        int index = getIndex(resume.getUuid());
+        if(index >= 0) {
             System.out.println("Resume " + resume + " already in array");
         } else {
-            storage[getIndex(resume.getUuid())] = resume;
+            storage[index] = resume;
         }
     }
 
@@ -36,14 +34,6 @@ public class ArrayStorage {
         } else {
             System.out.println("Resume " + resume + " already in array");
         }
-    }
-
-    public Resume get(String uuid) {
-        if(getIndex(uuid) < 0) {
-            System.out.println("Resume " + uuid + " not in array");
-            return null;
-        }
-        return storage[getIndex(uuid)];
     }
 
     public void delete(String uuid) {
@@ -63,11 +53,7 @@ public class ArrayStorage {
         return copyOf(storage, size);
     }
 
-    public int size() {
-        return size;
-    }
-
-    private int getIndex(String uuid) {
+    protected int getIndex(String uuid) {
         for(int i = 0; i < size; i++) {
             if(uuid.equals(storage[i].getUuid())) {
                 return i;
