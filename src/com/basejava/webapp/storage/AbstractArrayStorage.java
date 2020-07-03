@@ -9,8 +9,8 @@ import static java.util.Arrays.fill;
  * Array based storage for Resumes
  */
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int Storage_Limit = 10_000;
-    protected Resume[] storage = new Resume[Storage_Limit];
+    protected static final int storage_limit = 10_000;
+    protected Resume[] storage = new Resume[storage_limit];
     protected int size = 0;
 
     public int size() {
@@ -34,9 +34,9 @@ public abstract class AbstractArrayStorage implements Storage {
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if(index < 0) {
-            storage[index] = resume;
+            System.out.println("Resume " + resume + " already in array");
         }
-        System.out.println("Resume " + resume + " already in array");
+        storage[index] = resume;
     }
 
     public void save(Resume resume) {
