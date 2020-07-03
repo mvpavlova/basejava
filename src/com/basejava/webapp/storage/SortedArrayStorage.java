@@ -13,7 +13,10 @@ public class SortedArrayStorage extends AbstractArrayStorage{
         storage[newIndex] = resume;
     }
 
-
+    @Override
+    protected void deleteElement(int index) {
+        System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
+    }
 
     @Override
     protected int getIndex(String uuid) {

@@ -33,10 +33,10 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
-        if(index >= 0) {
-            System.out.println("Resume " + resume + " already in array");
+        if(index < 0) {
+            storage[index] = resume;
         }
-        storage[index] = resume;
+        System.out.println("Resume " + resume + " already in array");
     }
 
     public void save(Resume resume) {
@@ -53,15 +53,14 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    protected abstract void saveElement(Resume resume, int index);
-
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (index >= 0) {
-            System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
-            size--;
-        } else {
+        if (index < 0) {
             System.out.println("Resume " + uuid + " not in array");
+        } else {
+            deleteElement(index);
+            storage[size - 1] = null;
+            size--;
         }
     }
 
@@ -69,5 +68,7 @@ public abstract class AbstractArrayStorage implements Storage {
         return copyOf(storage, size);
     }
 
+    protected abstract void deleteElement(int index);
+    protected abstract void saveElement(Resume resume, int index);
     protected abstract int getIndex(String uuid);
 }
