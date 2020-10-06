@@ -1,8 +1,12 @@
 package com.basejava.webapp.storage;
 
+import com.basejava.webapp.exception.ExistStorageException;
+import com.basejava.webapp.exception.NotExistStorageException;
+import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 
-import static java.util.Arrays.copyOf;
+import java.util.Arrays;
+
 import static java.util.Arrays.fill;
 
 /**
@@ -17,13 +21,28 @@ public abstract class AbstractArrayStorage implements Storage {
         return size;
     }
 
+    public Resume[] getAll() {
+        return Arrays.copyOfRange(storage, 0, size);
+    }
+
     public Resume get(String uuid) {
         int index = getIndex(uuid);
         if(index < 0) {
-            System.out.println("Resume " + uuid + " not in array");
-            return null;
+            throw new NotExistStorageException(uuid);
         }
         return storage[index];
+    }
+
+
+    public void delete(String uuid) {
+        int index = getIndex(uuid);
+        if (index < 0) {
+            throw new NotExistStorageException(uuid);
+        } else {
+            deleteElement(index);
+            storage[size - 1] = null;
+            size--;
+        }
     }
 
     public void clear() {
@@ -34,7 +53,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if(index < 0) {
-            System.out.println("Resume " + resume + " already in array");
+          throw new NotExistStorageException(resume.getUuid());
         }
         storage[index] = resume;
     }
@@ -45,30 +64,19 @@ public abstract class AbstractArrayStorage implements Storage {
             if (size < storage.length) {
                 saveElement(resume, index);
                 size++;
+            } else if (size == storage_limit){
+               throw new StorageException("Array is full", resume.getUuid());
             } else {
-                System.out.println("Array is full");
+                throw new ExistStorageException(resume.getUuid());
             }
-        } else {
-            System.out.println("Resume " + resume + " already in array");
         }
     }
-
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            System.out.println("Resume " + uuid + " not in array");
-        } else {
-            deleteElement(index);
-            storage[size - 1] = null;
-            size--;
-        }
-    }
-
-    public Resume[] getAll() {
-        return copyOf(storage, size);
-    }
+    protected abstract void saveElement(Resume resume, int index);
 
     protected abstract void deleteElement(int index);
-    protected abstract void saveElement(Resume resume, int index);
+
     protected abstract int getIndex(String uuid);
 }
+
+
+
