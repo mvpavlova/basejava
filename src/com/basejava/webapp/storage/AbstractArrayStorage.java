@@ -13,8 +13,8 @@ import static java.util.Arrays.fill;
  * Array based storage for Resumes
  */
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int storage_limit = 10_000;
-    protected Resume[] storage = new Resume[storage_limit];
+    protected static final int STORAGE_LIMIT = 10_000;
+    protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
     public int size() {
@@ -32,7 +32,6 @@ public abstract class AbstractArrayStorage implements Storage {
         }
         return storage[index];
     }
-
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
@@ -64,11 +63,11 @@ public abstract class AbstractArrayStorage implements Storage {
             if (size < storage.length) {
                 saveElement(resume, index);
                 size++;
-            } else if (size == storage_limit){
-               throw new StorageException("Array is full", resume.getUuid());
             } else {
-                throw new ExistStorageException(resume.getUuid());
+               throw new StorageException("Array is full");
             }
+        } else {
+            throw new ExistStorageException(resume.getUuid());
         }
     }
     protected abstract void saveElement(Resume resume, int index);
