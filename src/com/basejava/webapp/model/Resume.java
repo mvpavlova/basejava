@@ -1,7 +1,5 @@
 package com.basejava.webapp.model;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.UUID;
 
 /**
@@ -16,7 +14,7 @@ public class Resume implements Comparable<Resume> {
         this(UUID.randomUUID().toString());
     }
 
-    public Resume(String uuid) {
+    public Resume(String uuid){
         this.uuid = uuid;
     }
 
@@ -44,7 +42,7 @@ public class Resume implements Comparable<Resume> {
     }
 
     @Override
-    public int compareTo(@NotNull Resume o) {
+    public int compareTo(Resume o) {
         return uuid.compareTo(o.uuid);
     }
 }
