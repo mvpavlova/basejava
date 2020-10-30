@@ -20,7 +20,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected void runSave(Resume resume, Object index) {
-        list.set((Integer) index, resume);
+        list.add((Integer) index, resume);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Object getIndex(String uuid) {
+    protected Integer getIndex(String uuid) {
         return list.indexOf(uuid);
     }
 

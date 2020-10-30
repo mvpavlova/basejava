@@ -17,13 +17,13 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected boolean exist(java.lang.Object index) {
+    protected boolean exist(Object index) {
         return (Integer) index >= 0;
     }
 
     @Override
     protected void saveElement(Resume resume, int index) {
-        storage[size] = resume;
+        storage[index] = resume;
     }
 
     @Override

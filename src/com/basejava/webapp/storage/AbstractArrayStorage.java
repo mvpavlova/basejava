@@ -1,5 +1,6 @@
 package com.basejava.webapp.storage;
 
+import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import static java.util.Arrays.fill;
 /**
  * Array based storage for Resumes
  */
+
 public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10_000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -28,9 +30,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void runSave(Resume resume, java.lang.Object index) {
+    protected void runSave(Resume resume, Object index){
         if(size == STORAGE_LIMIT) {
-            throw new SecurityException("Array is full");
+            throw new StorageException("Array is full", resume.getUuid());
         } else {
             saveElement(resume, (Integer) index);
             size++;
@@ -38,27 +40,32 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void runUpdate(Resume resume, java.lang.Object index) {
+    protected void runUpdate(Resume resume, Object index) {
         storage[(Integer) index] = resume;
     }
 
     @Override
-    protected Resume runGet(java.lang.Object index) {
+    protected Resume runGet(Object index) {
         return storage[(int) index];
     }
 
     @Override
-    protected void runDelete(java.lang.Object index) {
+    protected void runDelete(Object index) {
         deleteElement((Integer) index);
         storage[size - 1] = null;
         size--;
+    }
+
+    @Override
+    protected boolean exist(Object index) {
+        return (Integer) index > 0;
     }
 
     protected abstract void saveElement(Resume resume, int index);
 
     protected abstract void deleteElement(int index);
 
-    protected abstract Integer getIndex(String uuid);
+    protected abstract Object getIndex(String uuid);
 }
 
 
