@@ -17,11 +17,6 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected boolean exist(Object index) {
-        return (Integer) index >= 0;
-    }
-
-    @Override
     protected void saveElement(Resume resume, int index) {
         storage[index] = resume;
     }
