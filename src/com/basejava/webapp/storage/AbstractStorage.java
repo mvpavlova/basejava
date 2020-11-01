@@ -6,22 +6,22 @@ import com.basejava.webapp.model.Resume;
 public abstract class AbstractStorage implements Storage {
 
     public Resume get(String uuid) {
-        return runGet(ifExist(uuid));
+        return runGet(getIndexIfExist(uuid));
     }
 
     public void delete(String uuid) {
-        Object index = ifExist(uuid);
+        Object index = getIndexIfExist(uuid);
         runDelete(index);
     }
 
     public void update(Resume resume) {
-        Object index = ifExist(resume.getUuid());
+        Object index = getIndexIfExist(resume.getUuid());
         runUpdate(resume, index);
     }
 
 
     public void save(Resume resume) {
-        Object index = ifNotExist(resume.getUuid());
+        Object index = getIndexIfNotExist(resume.getUuid());
         runSave(resume, index);
     }
 
@@ -37,21 +37,21 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Object getIndex(String uuid);
 
-    private Object ifExist(String uuid) {
+    private Object getIndexIfExist(String uuid) {
         Object index = getIndex(uuid);
         if (!exist(index)) {
             throw new NotExistStorageException(uuid);
         } else {
-            return uuid;
+            return getIndex(uuid);
         }
     }
 
-    private Object ifNotExist(String uuid) {
+    private Object getIndexIfNotExist(String uuid) {
         Object index = getIndex(uuid);
         if (exist(index)) {
             throw new NotExistStorageException(uuid);
         } else {
-            return uuid;
+            return getIndex(uuid);
         }
 
     }
