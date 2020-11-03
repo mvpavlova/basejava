@@ -9,8 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public abstract class AbstractStorageTest {
-
-    private Storage storage;
+    private final Storage storage;
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -41,6 +40,7 @@ public abstract class AbstractStorageTest {
         storage.save(r3);
     }
 
+
     @Test
     public void save() throws Exception {
         storage.save(r4);
@@ -60,7 +60,7 @@ public abstract class AbstractStorageTest {
                 storage.save(new Resume());
             }
         } catch (StorageException e) {
-            Assert.fail("Overflowed ahed of time");
+            Assert.fail("Overflowed ahead of time");
         }
         storage.save(new Resume());
     }

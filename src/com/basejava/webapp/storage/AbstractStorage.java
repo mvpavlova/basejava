@@ -1,5 +1,6 @@
 package com.basejava.webapp.storage;
 
+import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.exception.NotExistStorageException;
 import com.basejava.webapp.model.Resume;
 
@@ -42,16 +43,16 @@ public abstract class AbstractStorage implements Storage {
         if (!exist(index)) {
             throw new NotExistStorageException(uuid);
         } else {
-            return getIndex(uuid);
+            return index;
         }
     }
 
     private Object getIndexIfNotExist(String uuid) {
         Object index = getIndex(uuid);
         if (exist(index)) {
-            throw new NotExistStorageException(uuid);
+            throw new ExistStorageException(uuid);
         } else {
-            return getIndex(uuid);
+            return index;
         }
 
     }
