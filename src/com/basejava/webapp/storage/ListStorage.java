@@ -5,12 +5,14 @@ import com.basejava.webapp.model.Resume;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ListStorage extends AbstractStorage {
     private List<Resume> list = new ArrayList<>();
 
+
     @Override
     protected void runDelete(Object index) {
-        list.remove(index);
+        list.remove(((Integer) index).intValue());
     }
 
     @Override
@@ -20,7 +22,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected void runSave(Resume resume, Object index) {
-        list.add((Integer) index, resume);
+        list.add(resume);
     }
 
     @Override
@@ -35,7 +37,12 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected Integer getIndex(String uuid) {
-        return list.indexOf(uuid);
+        for(int i = 0; i < list.size(); i++) {
+            if(list.get(i).getUuid().equals(uuid)) {
+                return i;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -45,7 +52,7 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public Resume[] getAll() {
-        return (Resume[]) list.toArray();
+        return list.toArray(new Resume[list.size()]);
     }
 
     @Override
