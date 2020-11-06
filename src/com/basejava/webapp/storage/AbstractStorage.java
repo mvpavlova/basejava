@@ -4,57 +4,54 @@ import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.exception.NotExistStorageException;
 import com.basejava.webapp.model.Resume;
 
-public abstract class AbstractStorage<R> implements Storage {
+public abstract class AbstractStorage implements Storage {
 
     public Resume get(String uuid) {
         return runGet(getIndexIfExist(uuid));
     }
 
     public void delete(String uuid) {
-        Object index = getIndexIfExist(uuid);
-        runDelete(index);
+        Object searchKey = getIndexIfExist(uuid);
+        runDelete(searchKey);
     }
 
     public void update(Resume resume) {
-        Object index = getIndexIfExist(resume.getUuid());
-        runUpdate(resume, index);
+        Object searchKey = getIndexIfExist(resume.getUuid());
+        runUpdate(resume, searchKey);
     }
 
 
     public void save(Resume resume) {
-        Object index = getIndexIfNotExist(resume.getUuid());
-        runSave(resume, index);
+        Object searchKey = getIndexIfNotExist(resume.getUuid());
+        runSave(resume, searchKey);
     }
 
-    protected abstract void runDelete(Object index);
+    protected abstract void runDelete(Object searchKey);
 
-    protected abstract void runUpdate(Resume resume, Object index);
+    protected abstract void runUpdate(Resume resume, Object searchKey);
 
-    protected abstract void runSave(Resume resume, Object index);
+    protected abstract void runSave(Resume resume, Object searchKey);
 
-    protected abstract Resume runGet(Object index);
+    protected abstract Resume runGet(Object searchKey);
 
-    protected abstract boolean exist(Object index);
+    protected abstract boolean exist(Object searchKey);
 
     protected abstract Object getIndex(String uuid);
 
     private Object getIndexIfExist(String uuid) {
-        Object index = getIndex(uuid);
-        if (!exist(index)) {
+        Object searchKey = getIndex(uuid);
+        if (!exist(searchKey)) {
             throw new NotExistStorageException(uuid);
-        } else {
-            return index;
         }
+        return searchKey;
     }
 
     private Object getIndexIfNotExist(String uuid) {
-        Object index = getIndex(uuid);
-        if (exist(index)) {
+        Object searchKey = getIndex(uuid);
+        if (exist(searchKey)) {
             throw new ExistStorageException(uuid);
-        } else {
-            return index;
         }
-
+        return searchKey;
     }
 
 }

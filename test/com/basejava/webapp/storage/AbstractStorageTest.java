@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public abstract class AbstractStorageTest {
-    public final Storage storage;
+    Storage storage;
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -59,10 +59,8 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAll() throws Exception {
-        Resume[] actualResumes = storage.getAll();
-        Assert.assertEquals(r1, actualResumes[0]);
-        Assert.assertEquals(r2, actualResumes[1]);
-        Assert.assertEquals(r3, actualResumes[2]);
+        Resume[] actual = new Resume[] {r1, r2, r3};
+        Assert.assertArrayEquals(actual, storage.getAll());
     }
 
     @Test
