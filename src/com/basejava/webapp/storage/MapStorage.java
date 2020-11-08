@@ -5,8 +5,8 @@ import com.basejava.webapp.model.Resume;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapStorage extends AbstractStorage{
-    private  static Map<String, Resume> map = new HashMap<>();
+public class MapStorage extends AbstractStorage {
+    private static Map<String, Resume> map = new HashMap<>();
 
     @Override
     protected void runDelete(Object searchKey) {
@@ -34,7 +34,7 @@ public class MapStorage extends AbstractStorage{
     }
 
     @Override
-    protected Object getIndex(String uuid) {
+    protected Object getSearchKey(String uuid) {
         return map.get(uuid);
     }
 
@@ -44,12 +44,14 @@ public class MapStorage extends AbstractStorage{
     }
 
     @Override
-    public Resume[] getAll() {
-        return new Resume[0];
-    }
-
-    @Override
     public int size() {
         return map.size();
     }
+
+    @Override
+    public Resume[] getAll() {
+        return map.values().toArray(new Resume[map.size()]);
+    }
+
+
 }

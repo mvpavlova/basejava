@@ -65,7 +65,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected abstract void deleteElement(int index);
 
-    protected abstract Object getIndex(String uuid);
+    protected abstract Object getSearchKey(String uuid);
 }
 
 
