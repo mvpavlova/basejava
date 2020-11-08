@@ -21,7 +21,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+        Resume[] sortArray = Arrays.copyOf(storage, size);
+        Arrays.sort(sortArray);
+        return sortArray;
     }
 
     public void clear() {
