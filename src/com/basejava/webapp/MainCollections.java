@@ -7,13 +7,13 @@ import java.util.*;
 public class MainCollections {
 
     private static final String UUID_1 = "uuid1";
-    private static Resume r1 = new Resume(UUID_1);
+    private static Resume r1 = new Resume(UUID_1, "Name1");
     private static final String UUID_2 = "uuid2";
-    private static Resume r2 = new Resume(UUID_2);
+    private static Resume r2 = new Resume(UUID_2, "Name2");
     private static final String UUID_3 = "uuid3";
-    private static Resume r3 = new Resume(UUID_3);
+    private static Resume r3 = new Resume(UUID_3, "Name3");
     private static final String UUID_4 = "uuid4";
-    private static Resume r4 = new Resume(UUID_4);
+    private static Resume r4 = new Resume(UUID_4, "Name4");
 
     public static void main(String[] args) {
         Collection<Resume> collection = new ArrayList<>();
@@ -53,5 +53,9 @@ public class MainCollections {
         for (Map.Entry<String, Resume> entry: map.entrySet()) {
             System.out.println(entry.getValue());
         }
+
+        List<Resume> resumes = Arrays.asList(r1, r2, r3);
+        resumes.remove(1);
+        System.out.println(resumes);
     }
 }

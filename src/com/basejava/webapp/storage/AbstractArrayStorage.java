@@ -4,6 +4,7 @@ import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static java.util.Arrays.fill;
 
@@ -20,10 +21,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    public Resume[] getAll() {
-        Resume[] sortArray = Arrays.copyOf(storage, size);
-        Arrays.sort(sortArray);
-        return sortArray;
+    @Override
+    public List<Resume> runGetAll() {
+        return Arrays.asList(Arrays.copyOf(storage, size));
     }
 
     public void clear() {
