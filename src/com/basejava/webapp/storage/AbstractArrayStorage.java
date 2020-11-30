@@ -12,7 +12,7 @@ import static java.util.Arrays.fill;
  * Array based storage for Resumes
  */
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected static final int STORAGE_LIMIT = 10_000;
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
@@ -32,42 +32,42 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void runSave(Resume resume, Object index){
+    protected void runSave(Resume resume, Integer index){
         if(size == STORAGE_LIMIT) {
             throw new StorageException("Array is full", resume.getUuid());
         } else {
-            saveElement(resume, (Integer) index);
+            saveElement(resume, index);
             size++;
         }
     }
 
     @Override
-    protected void runUpdate(Resume resume, Object index) {
-        storage[(Integer)index] = resume;
+    protected void runUpdate(Resume resume, Integer index) {
+        storage[index] = resume;
     }
 
     @Override
-    protected Resume runGet(Object index) {
-        return storage[(int) index];
+    protected Resume runGet(Integer index) {
+        return storage[index];
     }
 
     @Override
-    protected void runDelete(Object index) {
-        deleteElement((Integer) index);
+    protected void runDelete(Integer index) {
+        deleteElement(index);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    protected boolean exist(Object index) {
-        return (Integer) index >= 0;
+    protected boolean exist(Integer index) {
+        return index >= 0;
     }
 
     protected abstract void saveElement(Resume resume, int index);
 
     protected abstract void deleteElement(int index);
 
-    protected abstract Object getSearchKey(String uuid);
+    protected abstract Integer getSearchKey(String uuid);
 }
 
 
