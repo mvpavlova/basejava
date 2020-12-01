@@ -27,18 +27,15 @@ public class Link {
 
     @Override
     public boolean equals(Object o) {
-        if( this == o) return true;
-        if(o == null || getClass() != o.getClass()) return false;
-
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Link link = (Link) o;
-
-        if( !name.equals(link.name)) return false;
-        return url.equals(link.url);
+        return name.equals(link.name) &&
+                url.equals(link.url);
     }
 
     @Override
     public int hashCode() {
-        return content.hashCode();
+        return Objects.hash(name, url);
     }
-
 }
