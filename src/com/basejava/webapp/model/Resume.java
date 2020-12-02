@@ -13,8 +13,8 @@ public class Resume implements Comparable<Resume> {
     // Unique identifier
     private final String uuid;
     private final String fullName;
-    private final Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
-    private final Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
+    private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+    private Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
 
 
     public Resume(String fullName) {
@@ -22,6 +22,8 @@ public class Resume implements Comparable<Resume> {
     }
 
     public Resume(String uuid, String fullName) {
+        Objects.requireNonNull(uuid, "uuid cannot be null");
+        Objects.requireNonNull(fullName, "fullname cannot be null");
         this.uuid = uuid;
         this.fullName = fullName;
     }
@@ -29,11 +31,9 @@ public class Resume implements Comparable<Resume> {
     public String getUuid() {
         return uuid;
     }
-
     public String getFullName() {
         return fullName;
     }
-
     public String getContact(ContactType type) {
         return contacts.get(type);
     }
@@ -41,6 +41,26 @@ public class Resume implements Comparable<Resume> {
         return sections.get(type);
     }
 
+    public void setContacts(Map<ContactType, String> contacts) {
+        this.contacts = contacts;
+    }
+    public void setSections(Map<SectionType, AbstractSection> sections) {
+        this.sections = sections;
+    }
+    public void putSection(SectionType sectionType, AbstractSection section) {
+        sections.put(sectionType, section);
+    }
+
+    public void print() {
+        System.out.println(fullName);
+        contacts.forEach((k, v) -> System.out.println(k.getTitle() + " " + v));
+        sections.forEach((k, v) -> {
+            if(v != null) {
+                System.out.println(k.getTitle());
+                v.print();
+            }
+        });
+    }
 
     @Override
     public boolean equals(Object o) {

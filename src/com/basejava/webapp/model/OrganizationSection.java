@@ -28,4 +28,9 @@ public class OrganizationSection extends AbstractSection {
     public int hashCode() {
         return Objects.hash(organizations);
     }
+
+    @Override
+    public void print() {
+        organizations.forEach(System.out::println);
+    }
 }

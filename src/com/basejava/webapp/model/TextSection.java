@@ -26,5 +26,10 @@ public class TextSection extends AbstractSection {
     public int hashCode() {
         return content.hashCode();
     }
+
+    @Override
+    public void print() {
+        System.out.println(content);
+    }
 }
 
