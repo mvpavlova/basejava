@@ -31,9 +31,4 @@ public class ListSection<S> extends AbstractSection {
     public int hashCode() {
         return Objects.hash(items);
     }
-
-    @Override
-    public void print() {
-        items.forEach(System.out::println);
-    }
 }

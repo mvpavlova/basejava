@@ -14,8 +14,8 @@ public class TextSection extends AbstractSection {
 
     @Override
     public boolean equals(Object o) {
-        if( this == o) return true;
-        if(o == null || getClass() != o.getClass()) return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
         TextSection that = (TextSection) o;
 
@@ -25,11 +25,6 @@ public class TextSection extends AbstractSection {
     @Override
     public int hashCode() {
         return content.hashCode();
-    }
-
-    @Override
-    public void print() {
-        System.out.println(content);
     }
 }
 

@@ -51,17 +51,6 @@ public class Resume implements Comparable<Resume> {
         sections.put(sectionType, section);
     }
 
-    public void print() {
-        System.out.println(fullName);
-        contacts.forEach((k, v) -> System.out.println(k.getTitle() + " " + v));
-        sections.forEach((k, v) -> {
-            if(v != null) {
-                System.out.println(k.getTitle());
-                v.print();
-            }
-        });
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,7 +69,7 @@ public class Resume implements Comparable<Resume> {
 
     @Override
     public String toString() {
-        return "Resume: " + "uuid= " + uuid + " fullName= " + fullName;
+        return "Resume: " + "uuid= " + uuid + " fullName= " + fullName + contacts + sections;
     }
 
     @Override

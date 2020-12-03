@@ -60,15 +60,19 @@ public class ResumeTestData {
                         "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"",
                         null)));
 
-        resume.setContacts(contacts);
-        resume.putSection(SectionType.OBJECTIVE, objective);
-        resume.putSection(SectionType.PERSONAL, personal);
-        resume.putSection(SectionType.ACHIEVEMENT, achievements);
-        resume.putSection(SectionType.QUALIFICATION, qualifications);
-        resume.putSection(SectionType.EXPERIENCE, experience);
-        resume.putSection(SectionType.EDUCATION, educations);
+        Map<SectionType, AbstractSection> sections = new EnumMap<SectionType, AbstractSection>(SectionType.class) {{
+            put(SectionType.OBJECTIVE, objective);
+            put(SectionType.PERSONAL, personal);
+            put(SectionType.ACHIEVEMENT, achievements);
+            put(SectionType.QUALIFICATION, qualifications);
+            put(SectionType.EXPERIENCE, experience);
+            put(SectionType.EDUCATION, educations);
+        }};
 
-        resume.print();
+        resume.setContacts(contacts);
+        resume.setSections(sections);
+
+        System.out.println(resume.toString());
     }
 }
 
