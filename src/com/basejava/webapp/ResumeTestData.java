@@ -38,27 +38,28 @@ public class ResumeTestData {
 
         OrganizationSection experience = new OrganizationSection(Arrays.asList(
                 new Organization(new Link("Java Online Project", "http://javaops.ru/"),
-                        LocalDate.of(2013, 10, 01), null, "Автор проекта",
-                        "Создание и проведение онлайн занятий и стажировок"),
+                        Arrays.asList(new Organization.Position(LocalDate.of(2013, 10, 01),
+                                null, "Автор проекта",
+                                "Создание и проведение онлайн занятий и стажировок"))),
                 new Organization(new Link("Wrike", "https://www.wrike.com/"),
-                        LocalDate.of(2014, 10, 01),
-                        LocalDate.of(2016, 01, 01),
-                        "Старший разработчик (backend)",
-                        "Проектирование и разработка онлайн платформы управления проектами Wrike" +
-                                " (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis)." +
-                                " Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.")));
+                        Arrays.asList(new Organization.Position(LocalDate.of(2014, 10, 01),
+                                LocalDate.of(2016, 01, 01),
+                                "Старший разработчик (backend)",
+                                "Проектирование и разработка онлайн платформы управления проектами Wrike" +
+                                        " (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis)." +
+                                        " Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.")))));
 
         OrganizationSection educations = new OrganizationSection(Arrays.asList(
                 new Organization(new Link("Coursera", "https://www.coursera.org/"),
-                        LocalDate.of(2013, 03, 01),
-                        LocalDate.of(2013, 05, 01),
-                        "\"Functional Programming Principles in Scala\" by Martin Odersky",
-                        null),
+                        Arrays.asList(new Organization.Position(LocalDate.of(2013, 03, 01),
+                                LocalDate.of(2013, 05, 01),
+                                "\"Functional Programming Principles in Scala\" by Martin Odersky",
+                                null))),
                 new Organization(new Link("Luxoft", "https://www.luxoft-training.ru/"),
-                        LocalDate.of(2011, 03, 01),
-                        LocalDate.of(2011, 04, 01),
-                        "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"",
-                        null)));
+                        Arrays.asList(new Organization.Position(LocalDate.of(2011, 03, 01),
+                                LocalDate.of(2011, 04, 01),
+                                "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"",
+                                null)))));
 
         Map<SectionType, AbstractSection> sections = new EnumMap<SectionType, AbstractSection>(SectionType.class) {{
             put(SectionType.OBJECTIVE, objective);

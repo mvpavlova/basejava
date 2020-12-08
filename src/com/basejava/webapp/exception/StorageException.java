@@ -1,9 +1,11 @@
 package com.basejava.webapp.exception;
 
+import java.io.IOException;
+
 public class StorageException extends RuntimeException {
     private final String uuid;
 
-    public StorageException(String uuid) {
+    public StorageException(String io_error, String uuid, IOException e) {
         this.uuid = uuid;
     }
 

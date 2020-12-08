@@ -2,11 +2,12 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.exception.NotExistStorageException;
-import com.basejava.webapp.model.Resume;
+import com.basejava.webapp.model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,6 +29,23 @@ public abstract class AbstractStorageTest {
         r2 = new Resume(UUID_2, "Name2");
         r3 = new Resume(UUID_3, "Name3");
         r4 = new Resume(UUID_4, "Name4");
+        r1.putSection(SectionType.OBJECTIVE, new TextSection("Obj1"));
+        r1.putSection(SectionType.PERSONAL, new TextSection("Per1"));
+        r1.putSection(SectionType.ACHIEVEMENT, new ListSection("Ach1","Ach2"));
+        r1.putSection(SectionType.QUALIFICATION, new ListSection("qua1", "qua2"));
+        r1.putSection(SectionType.EXPERIENCE,
+                new OrganizationSection(
+                        new Organization("Org1", "http://Org1.ru",
+                                new Organization.Position(2000, Month.APRIL, "pos1", "cont1"),
+                                new Organization.Position(2005, Month.AUGUST,"pos2", "con2"))));
+        r1.putSection(SectionType.EDUCATION,
+                new OrganizationSection(
+                        new Organization("inst", null,
+                                new Organization.Position(1995,Month.AUGUST, "pos.inst1", "cont.inst1")),
+                        new Organization("inst2", null,
+                                new Organization.Position(1996, Month.AUGUST, "pos.inst2", "cont.inst2"))));
+
+
     }
 
     public AbstractStorageTest(Storage storage) {

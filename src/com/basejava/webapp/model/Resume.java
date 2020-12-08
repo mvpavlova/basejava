@@ -47,8 +47,9 @@ public class Resume implements Comparable<Resume> {
     public void setSections(Map<SectionType, AbstractSection> sections) {
         this.sections = sections;
     }
+
     public void putSection(SectionType sectionType, AbstractSection section) {
-        sections.put(sectionType, section);
+        sections.put(sectionType,section);
     }
 
     @Override
