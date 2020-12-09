@@ -3,11 +3,22 @@ package com.basejava.webapp;
 import com.basejava.webapp.model.*;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 
 public class ResumeTestData {
+    public static final String UUID_1 = "uuid1";
+    public static final String UUID_2 = "uuid2";
+    public static final String UUID_3 = "uuid3";
+    public static final String UUID_4 = "uuid4";
+
+    public static final Resume r1 = new Resume(UUID_1, "Name1");
+    public static final Resume r2 = new Resume(UUID_2, "Name2");
+    public static final Resume r3 = new Resume(UUID_3, "Name3");
+    public static final Resume r4 = new Resume(UUID_4, "Name4");
+
     public static void main(String[] args) {
         Resume resume = new Resume("Grigoriy Kislin");
 
@@ -75,5 +86,42 @@ public class ResumeTestData {
 
         System.out.println(resume.toString());
     }
+
+    public static void fillStorage() {
+
+        r1.putSection(SectionType.OBJECTIVE, new TextSection("Obj1"));
+        r1.putSection(SectionType.PERSONAL, new TextSection("Per1"));
+        r1.putSection(SectionType.ACHIEVEMENT, new ListSection("Ach1.1", "Ach1.2"));
+        r1.putSection(SectionType.QUALIFICATION, new ListSection("qua1.1", "qua1.2"));
+        r1.putSection(SectionType.EXPERIENCE,
+                new OrganizationSection(
+                        new Organization("Org1", "http://Org1.ru",
+                                new Organization.Position(2000, Month.APRIL, "pos1.1", "cont1.1"),
+                                new Organization.Position(2005, Month.AUGUST, "pos1.2", "con1.2"))));
+        r1.putSection(SectionType.EDUCATION,
+                new OrganizationSection(
+                        new Organization("inst1.1", null,
+                                new Organization.Position(1995, Month.AUGUST, "pos.inst1.1", "cont.inst1.1")),
+                        new Organization("inst1.2", null,
+                                new Organization.Position(1996, Month.AUGUST, "pos.inst1.2", "cont.inst1.2"))));
+
+
+        r2.putSection(SectionType.OBJECTIVE, new TextSection("Obj2"));
+        r2.putSection(SectionType.PERSONAL, new TextSection("Per2"));
+        r2.putSection(SectionType.ACHIEVEMENT, new ListSection("Ach2.1", "Ach2.2"));
+        r2.putSection(SectionType.QUALIFICATION, new ListSection("qua2.1", "qua2.2"));
+        r2.putSection(SectionType.EXPERIENCE,
+                new OrganizationSection(
+                        new Organization("Org2", "http://Org2.ru",
+                                new Organization.Position(2000, Month.APRIL, "pos2.1", "cont2.1"),
+                                new Organization.Position(2005, Month.AUGUST, "pos2.2", "con2.2"))));
+        r2.putSection(SectionType.EDUCATION,
+                new OrganizationSection(
+                        new Organization("inst2.1", null,
+                                new Organization.Position(1995, Month.AUGUST, "pos.inst2.1", "cont.inst2.1")),
+                        new Organization("inst2.2", null,
+                                new Organization.Position(1996, Month.AUGUST, "pos.inst2.2", "cont.inst2.2"))));
+    }
+
 }
 
