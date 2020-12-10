@@ -38,6 +38,14 @@ public class Organization {
         return Objects.hash(homePage, positions);
     }
 
+    @Override
+    public String toString() {
+        return "Organization{" +
+                "homePage=" + homePage +
+                ", positions=" + positions +
+                '}';
+    }
+
     public static class Position {
         private final LocalDate startDate;
         private final LocalDate endDate;

@@ -9,32 +9,27 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class ResumeTestData {
-    public static final String UUID_1 = "uuid1";
-    public static final String UUID_2 = "uuid2";
-    public static final String UUID_3 = "uuid3";
-    public static final String UUID_4 = "uuid4";
+    private static final String UUID = "uuid1";
+    private static final String FULLNAME = "name1";
 
-    public static final Resume r1 = new Resume(UUID_1, "Григорий Кислин");
-    public static final Resume r2 = new Resume(UUID_2, "Name2");
-    public static final Resume r3 = new Resume(UUID_3, "Name3");
-    public static final Resume r4 = new Resume(UUID_4, "Name4");
 
     public static void main(String[] args) {
-        Resume resume = fillStorage();
+        Resume resume = fillStorage(UUID, FULLNAME);
         printResume(resume);
     }
 
     public static void printResume(Resume resume) {
-        for(ContactType contact: ContactType.values()) {
+        for (ContactType contact : ContactType.values()) {
             System.out.println(contact.getTitle() + ": " + resume.getContact(contact));
         }
-        for(SectionType section: SectionType.values()) {
+        for (SectionType section : SectionType.values()) {
             AbstractSection choseSection = resume.getSection(section);
             System.out.println(section.getTitle() + ": " + choseSection.toString());
         }
     }
-    public static Resume fillStorage() {
-        Resume resume = new Resume(UUID_1, r1.getFullName());
+
+    public static Resume fillStorage(String uuid, String fullName) {
+        Resume resume = new Resume(uuid, fullName);
 
         Map<ContactType, String> contacts = new EnumMap<ContactType, String>(ContactType.class) {{
             put(ContactType.PHONE, "+7(921) 855-0482");
@@ -59,7 +54,7 @@ public class ResumeTestData {
                             "проектов. Более 1000 выпускников.")));
             put(SectionType.QUALIFICATION, new ListSection<>(Arrays.asList(
                     "JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2")));
-            put(SectionType.EXPERIENCE,  new OrganizationSection(Arrays.asList(
+            put(SectionType.EXPERIENCE, new OrganizationSection(
                     new Organization(new Link("Java Online Project", "http://javaops.ru/"),
                             Arrays.asList(new Position(LocalDate.of(2013, 10, 01),
                                     null, "Автор проекта",
@@ -70,8 +65,8 @@ public class ResumeTestData {
                                     "Старший разработчик (backend)",
                                     "Проектирование и разработка онлайн платформы управления проектами Wrike" +
                                             " (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis)." +
-                                            " Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."))))));
-            put(SectionType.EDUCATION, new OrganizationSection(Arrays.asList(
+                                            " Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.")))));
+            put(SectionType.EDUCATION, new OrganizationSection(
                     new Organization(new Link("Coursera", "https://www.coursera.org/"),
                             Arrays.asList(new Position(LocalDate.of(2013, 03, 01),
                                     LocalDate.of(2013, 05, 01),
@@ -81,7 +76,7 @@ public class ResumeTestData {
                             Arrays.asList(new Position(LocalDate.of(2011, 03, 01),
                                     LocalDate.of(2011, 04, 01),
                                     "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"",
-                                    null))))));
+                                    null)))));
 
         }};
         resume.setSections(sections);

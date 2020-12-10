@@ -46,6 +46,8 @@ public class MainFile {
                     printAllDirectory(file);
                 }
             }
+        } else {
+            System.out.println("File is unavailable");
         }
     }
 }

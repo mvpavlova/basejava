@@ -1,29 +1,33 @@
 package com.basejava.webapp.storage;
 
+import com.basejava.webapp.ResumeTestData;
 import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.exception.NotExistStorageException;
 import com.basejava.webapp.model.Resume;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static com.basejava.webapp.ResumeTestData.*;
-
 public abstract class AbstractStorageTest {
     protected Storage storage;
+
+    public static final String UUID_1 = "uuid1";
+    public static final String UUID_2 = "uuid2";
+    public static final String UUID_3 = "uuid3";
+    public static final String UUID_4 = "uuid4";
+
+    public static final Resume r1 = ResumeTestData.fillStorage(UUID_1, "Григорий Кислин");
+    public static final Resume r2 = ResumeTestData.fillStorage(UUID_2, "Name2");
+    public static final Resume r3 = ResumeTestData.fillStorage(UUID_3, "Name3");
+    public static final Resume r4 = ResumeTestData.fillStorage(UUID_4, "Name4");
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
 
-    @BeforeClass
-    public static void openFillStorage() {
-        fillStorage();
-    }
     @Before
     public void setUp() throws Exception {
         storage.clear();
@@ -52,7 +56,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAllSorted() throws Exception {
-        List<Resume> expected = Arrays.asList(r1, r2, r3);
+        List<Resume> expected = Arrays.asList(r2, r3, r1);
         Assert.assertEquals(3, expected.size());
         Assert.assertEquals(expected, storage.getAllSorted());
     }
