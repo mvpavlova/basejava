@@ -5,17 +5,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
-/**
- * Initial resume class
- */
 public class Resume implements Comparable<Resume> {
 
-    // Unique identifier
     private final String uuid;
     private final String fullName;
     private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
     private Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
-
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);

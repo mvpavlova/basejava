@@ -21,6 +21,8 @@ public class MainFile {
             for (String name : dir.list()) {
                 System.out.println(name);
             }
+        } else {
+            System.out.println("List is empty");
         }
 
 

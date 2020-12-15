@@ -14,17 +14,17 @@ import java.util.List;
 public abstract class AbstractStorageTest {
     protected Storage storage;
 
-    public static final String UUID_1 = "uuid1";
-    public static final String UUID_2 = "uuid2";
-    public static final String UUID_3 = "uuid3";
-    public static final String UUID_4 = "uuid4";
+    private static final String UUID_1 = "uuid1";
+    private static final String UUID_2 = "uuid2";
+    private static final String UUID_3 = "uuid3";
+    private static final String UUID_4 = "uuid4";
 
-    public static final Resume r1 = ResumeTestData.fillStorage(UUID_1, "Григорий Кислин");
-    public static final Resume r2 = ResumeTestData.fillStorage(UUID_2, "Name2");
-    public static final Resume r3 = ResumeTestData.fillStorage(UUID_3, "Name3");
-    public static final Resume r4 = ResumeTestData.fillStorage(UUID_4, "Name4");
+    private static final Resume r1 = ResumeTestData.fillStorage(UUID_1, "Григорий Кислин");
+    private static final Resume r2 = ResumeTestData.fillStorage(UUID_2, "Name2");
+    private static final Resume r3 = ResumeTestData.fillStorage(UUID_3, "Name3");
+    private static final Resume r4 = ResumeTestData.fillStorage(UUID_4, "Name4");
 
-    public AbstractStorageTest(Storage storage) {
+    protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
     }
 
@@ -35,7 +35,6 @@ public abstract class AbstractStorageTest {
         storage.save(r2);
         storage.save(r3);
     }
-
 
     @Test
     public void save() throws Exception {
@@ -63,7 +62,9 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() throws Exception {
-        arrayGet(r1);
+        Assert.assertEquals(r1, storage.get(r1.getUuid()));
+        Assert.assertEquals(r2, storage.get(r2.getUuid()));
+        Assert.assertEquals(r3, storage.get(r3.getUuid()));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -99,10 +100,6 @@ public abstract class AbstractStorageTest {
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() throws Exception {
         storage.update(r4);
-    }
-
-    private void arrayGet(Resume resume) {
-        Assert.assertEquals(resume, storage.get(resume.getUuid()));
     }
 
     private void arraySize(int size) {
