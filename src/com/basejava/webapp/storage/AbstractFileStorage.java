@@ -3,8 +3,7 @@ package com.basejava.webapp.storage;
 import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -50,7 +49,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void runUpdate(Resume resume, File file) {
         try {
-            doWrite(resume, file);
+            doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("File update error", resume.getUuid(), e);
         }
@@ -66,20 +65,16 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected void runSave(Resume resume, File file) {
         try {
             file.createNewFile();
-            doWrite(resume, file);
         } catch (IOException e) {
             throw new StorageException("Create file error" + file.getAbsolutePath(), file.getName(), e);
         }
+        runUpdate(resume, file);
     }
-
-    protected abstract void doWrite(Resume resume, File file) throws IOException;
-
-    protected abstract Resume doRead(File file) throws IOException;
 
     @Override
     protected Resume runGet(File file) {
         try {
-            return doRead(file);
+            return doRead(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("Read file error", file.getName(), e);
         }
@@ -104,4 +99,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         }
         return list;
     }
+
+    protected abstract void doWrite(Resume resume, OutputStream os) throws IOException;
+    protected abstract Resume doRead(InputStream is) throws IOException;
 }
